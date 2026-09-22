@@ -93,6 +93,8 @@ OSPF provides connectivity between:
 
 NAT/PAT is configured on the enterprise Internet edge to allow private internal networks to communicate with the simulated Internet using the public address space.
 
+```text
+Improve README documentation and add project evidence
 ## 🖥️ DMZ Verification
 
 The public HTTP service was tested from the simulated Internet using:
