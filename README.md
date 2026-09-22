@@ -1,4 +1,5 @@
 # 🔐 Secure Multi-Branch Enterprise Network
+> **Project Highlights:** VLAN Segmentation • OSPF • ACLs • SSH Hardening • NAT/PAT • DMZ • Multi-Branch Routing
 
 A secure multi-branch enterprise network designed and implemented using **Cisco Packet Tracer**, focusing on enterprise networking, network segmentation, dynamic routing, access control, secure management, NAT/PAT, and DMZ architecture.
 
@@ -290,7 +291,6 @@ It provides dynamic route exchange between:
 - Headquarters
 - Branch 1
 - Branch 2
-- ISP / Internet edge
 
 ## OSPF Neighbor Verification
 
@@ -466,7 +466,7 @@ The completed network was tested for:
 
 ---
 
-# 💻 Important Cisco IOS Commands
+# 💻 Cisco IOS Configuration & Verification Commands
 
 This section documents the major commands used throughout the project for **configuration, verification, troubleshooting, and security testing**.
 
