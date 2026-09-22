@@ -38,6 +38,199 @@ The topology includes:
 
 ---
 
+# 📋 IP Addressing Scheme
+
+The enterprise network uses structured IPv4 addressing to separate departments, branches, management traffic, servers, DMZ services, and WAN links.
+
+## 🏢 HQ VLAN Addressing
+
+| VLAN | Name | Network | Subnet Mask | Default Gateway |
+|---:|---|---|---|---|
+| 10 | ADMIN | `10.10.10.0/24` | `255.255.255.0` | `10.10.10.1` |
+| 20 | HR | `10.10.20.0/24` | `255.255.255.0` | `10.10.20.1` |
+| 30 | IT | `10.10.30.0/24` | `255.255.255.0` | `10.10.30.1` |
+| 40 | USERS | `10.10.40.0/24` | `255.255.255.0` | `10.10.40.1` |
+| 50 | GUEST | `10.10.50.0/24` | `255.255.255.0` | `10.10.50.1` |
+| 60 | SERVER | `10.10.60.0/24` | `255.255.255.0` | `10.10.60.1` |
+| 99 | MANAGEMENT | `10.10.99.0/24` | `255.255.255.0` | `10.10.99.1` |
+
+---
+
+## 💻 HQ End Devices
+
+| Device | VLAN | IP Address | Subnet Mask | Default Gateway |
+|---|---:|---|---|---|
+| HQ-PC1 | 10 ADMIN | `10.10.10.11` | `255.255.255.0` | `10.10.10.1` |
+| HQ-PC2 | 20 HR | `10.10.20.11` | `255.255.255.0` | `10.10.20.1` |
+| HQ-PC3 | 30 IT | `10.10.30.11` | `255.255.255.0` | `10.10.30.1` |
+| HQ-PC4 | 40 USERS | `10.10.40.11` | `255.255.255.0` | `10.10.40.1` |
+| HQ-PC5 | 50 GUEST | `10.10.50.11` | `255.255.255.0` | `10.10.50.1` |
+| HQ-PC6 | 10 ADMIN | `10.10.10.12` | `255.255.255.0` | `10.10.10.1` |
+| HQ-SRV | 60 SERVER | `10.10.60.10` | `255.255.255.0` | `10.10.60.1` |
+
+---
+
+## 🏢 HQ Core & Router Addressing
+
+| Device | Interface | IP Address | Subnet Mask | Purpose |
+|---|---|---|---|---|
+| HQ-CORE | G1/0/1 | `10.255.0.1` | `255.255.255.252` | HQ Core ↔ HQ-R1 |
+| HQ-R1 | G0/0 | `10.255.0.2` | `255.255.255.252` | HQ Core connection |
+| HQ-R1 | G0/1 | `203.0.113.2` | `255.255.255.252` | Internet-facing interface |
+| HQ-R1 | G0/2 | `172.16.10.1` | `255.255.255.0` | DMZ gateway |
+| HQ-R1 | S0/3/0 | `10.255.1.1` | `255.255.255.252` | HQ ↔ Branch 1 |
+| HQ-R1 | S0/3/1 | `10.255.2.1` | `255.255.255.252` | HQ ↔ Branch 2 |
+
+---
+
+## 🏢 Branch 1 VLAN Addressing
+
+| VLAN | Name | Network | Subnet Mask | Default Gateway |
+|---:|---|---|---|---|
+| 110 | BR1-USERS | `10.11.10.0/24` | `255.255.255.0` | `10.11.10.1` |
+| 120 | BR1-ADMIN | `10.11.20.0/24` | `255.255.255.0` | `10.11.20.1` |
+
+### Branch 1 Router
+
+| Device | Interface | VLAN | IP Address |
+|---|---|---:|---|
+| BR1-R1 | G0/0.110 | 110 | `10.11.10.1` |
+| BR1-R1 | G0/0.120 | 120 | `10.11.20.1` |
+| BR1-R1 | S0/3/0 | WAN | `10.255.1.2` |
+
+### Branch 1 End Devices
+
+| Device | VLAN | IP Address | Subnet Mask | Default Gateway |
+|---|---:|---|---|---|
+| BR1-PC1 | 110 USERS | `10.11.10.11` | `255.255.255.0` | `10.11.10.1` |
+| BR1-PC2 | 110 USERS | `10.11.10.12` | `255.255.255.0` | `10.11.10.1` |
+| BR1-PC3 | 120 ADMIN | `10.11.20.11` | `255.255.255.0` | `10.11.20.1` |
+| BR1-PC4 | 120 ADMIN | `10.11.20.12` | `255.255.255.0` | `10.11.20.1` |
+
+---
+
+## 🏢 Branch 2 VLAN Addressing
+
+| VLAN | Name | Network | Subnet Mask | Default Gateway |
+|---:|---|---|---|---|
+| 210 | BR2-USERS | `10.12.10.0/24` | `255.255.255.0` | `10.12.10.1` |
+| 220 | BR2-ADMIN | `10.12.20.0/24` | `255.255.255.0` | `10.12.20.1` |
+
+### Branch 2 Router
+
+| Device | Interface | VLAN | IP Address |
+|---|---|---:|---|
+| BR2-R1 | G0/0.210 | 210 | `10.12.10.1` |
+| BR2-R1 | G0/0.220 | 220 | `10.12.20.1` |
+| BR2-R1 | S0/3/0 | WAN | `10.255.2.2` |
+
+### Branch 2 End Devices
+
+| Device | VLAN | IP Address | Subnet Mask | Default Gateway |
+|---|---:|---|---|---|
+| BR2-PC1 | 210 USERS | `10.12.10.11` | `255.255.255.0` | `10.12.10.1` |
+| BR2-PC2 | 210 USERS | `10.12.10.12` | `255.255.255.0` | `10.12.10.1` |
+| BR2-PC3 | 220 ADMIN | `10.12.20.11` | `255.255.255.0` | `10.12.20.1` |
+| BR2-PC4 | 220 ADMIN | `10.12.20.12` | `255.255.255.0` | `10.12.20.1` |
+
+---
+
+## 🌍 DMZ Addressing
+
+The DMZ is isolated into its own network:
+
+```text
+172.16.10.0/24
+```
+
+| Device | Interface | IP Address | Subnet Mask | Purpose |
+|---|---|---|---|---|
+| HQ-R1 | G0/2 | `172.16.10.1` | `255.255.255.0` | DMZ Gateway |
+| DMZ-WEB | NIC | `172.16.10.10` | `255.255.255.0` | Public Web Server |
+
+The DMZ provides a separate security zone for public-facing services without placing them directly inside the trusted internal networks.
+
+---
+
+## 🌐 ISP / Internet Addressing
+
+| Device | Interface | IP Address | Subnet Mask | Purpose |
+|---|---|---|---|---|
+| ISP-R1 | G0/0 | `203.0.113.1` | `255.255.255.252` | ISP ↔ HQ-R1 |
+| HQ-R1 | G0/1 | `203.0.113.2` | `255.255.255.252` | Internet-facing interface |
+| ISP-R1 | Loopback0 | `198.51.100.1` | `255.255.255.255` | Simulated Internet |
+
+---
+
+## 🔗 WAN Addressing
+
+### HQ ↔ Branch 1
+
+Network:
+
+```text
+10.255.1.0/30
+```
+
+| Device | Interface | IP Address |
+|---|---|---|
+| HQ-R1 | S0/3/0 | `10.255.1.1` |
+| BR1-R1 | S0/3/0 | `10.255.1.2` |
+
+### HQ ↔ Branch 2
+
+Network:
+
+```text
+10.255.2.0/30
+```
+
+| Device | Interface | IP Address |
+|---|---|---|
+| HQ-R1 | S0/3/1 | `10.255.2.1` |
+| BR2-R1 | S0/3/0 | `10.255.2.2` |
+
+---
+
+## 📊 Complete Network Summary
+
+| Network | Purpose |
+|---|---|
+| `10.10.10.0/24` | HQ ADMIN |
+| `10.10.20.0/24` | HQ HR |
+| `10.10.30.0/24` | HQ IT |
+| `10.10.40.0/24` | HQ USERS |
+| `10.10.50.0/24` | HQ GUEST |
+| `10.10.60.0/24` | HQ SERVER |
+| `10.10.99.0/24` | HQ MANAGEMENT |
+| `10.11.10.0/24` | Branch 1 USERS |
+| `10.11.20.0/24` | Branch 1 ADMIN |
+| `10.12.10.0/24` | Branch 2 USERS |
+| `10.12.20.0/24` | Branch 2 ADMIN |
+| `172.16.10.0/24` | DMZ |
+| `10.255.0.0/30` | HQ-CORE ↔ HQ-R1 |
+| `10.255.1.0/30` | HQ ↔ Branch 1 |
+| `10.255.2.0/30` | HQ ↔ Branch 2 |
+| `203.0.113.0/30` | HQ ↔ ISP |
+| `198.51.100.1/32` | Simulated Internet |
+
+---
+
+## 🧭 Addressing Design
+
+The addressing scheme separates the enterprise into multiple security and routing domains:
+
+- **Departmental VLANs** isolate HQ departments.
+- **Guest VLAN 50** separates guest users from trusted internal networks.
+- **Management VLAN 99** provides a dedicated management network.
+- **Server VLAN 60** separates internal servers from user networks.
+- **Branch VLANs** provide independent user and administrative networks.
+- **DMZ `172.16.10.0/24`** isolates public-facing services.
+- **/30 WAN networks** provide point-to-point connectivity between routers.
+- **203.0.113.0/30** provides the simulated Internet connection between HQ-R1 and ISP-R1.
+
+This addressing structure supports the project's routing, ACL, NAT, SSH, and DMZ security policies.
+
 # 🛠️ Technologies & Concepts
 
 | Technology / Concept | Purpose |
